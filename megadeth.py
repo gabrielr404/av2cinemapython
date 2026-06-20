@@ -1,12 +1,14 @@
 import flet as ft
 
 def main(page: ft.Page):
+    # Configurações da janela
     page.title = "Cinema Stardust Crusaders"
     page.window.width = 1920
     page.window.height = 1080
 
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
 
+    # Matriz de assentos de cada filme
     salas = {
         "Backrooms": [
             ["L", "L", "L", "L", "L"],
@@ -27,6 +29,7 @@ def main(page: ft.Page):
         ]
     }
     
+    # Calcula quantidade de assentos livres, ocupados e percentual de ocupação
     def calcular_ocupacao(nome):
         livres = 0
         ocupados = 0
@@ -43,6 +46,7 @@ def main(page: ft.Page):
 
         return livres, ocupados, percentual
 
+    # Marca ou desmarca um assento selecionado
     def selecionar_assento(nome, linha, coluna):
         if salas[nome][linha][coluna] == "L":
             salas[nome][linha][coluna] = "S"
@@ -52,6 +56,7 @@ def main(page: ft.Page):
 
         escolher_filme(nome)
 
+    # Confirma a compra dos assentos selecionados
     def confirmar_compra(nome):
         escolhidos = []
 
@@ -77,6 +82,7 @@ def main(page: ft.Page):
             )   
         )
 
+    # Tela da sala escolhida
     def escolher_filme(nome):
         page.clean()
 
@@ -97,6 +103,7 @@ def main(page: ft.Page):
             ft.Container(height=40),
         ),
 
+        # Exibe os assentos da sala
         mostrar_assentos(nome, salas[nome])
 
         page.add(
@@ -116,6 +123,7 @@ def main(page: ft.Page):
         )
     )
     
+    # Cancela a compra e libera os assentos ocupados
     def cancelar_compra(nome):
         for linha in range(3):
          for coluna in range(5):
@@ -124,6 +132,7 @@ def main(page: ft.Page):
 
         escolher_filme(nome)
 
+    # Mostra os botões dos assentos na tela
     def mostrar_assentos(nome, assentos):
         for linha in range(3):
             botoes = []
@@ -131,6 +140,7 @@ def main(page: ft.Page):
             for coluna in range(5):
                 estado = assentos[linha][coluna]
 
+                # Define o texto exibido em cada assento
                 if estado == "S":
                     texto = "✓"
                 elif estado == "O":
@@ -156,6 +166,7 @@ def main(page: ft.Page):
                 )
             )
 
+    # Tela de seleção dos filmes
     def clique_iniciar():
         page.clean()
         page.add(
@@ -213,6 +224,7 @@ def main(page: ft.Page):
             )
         )
 
+    # Tela inicial do sistema
     page.add(
         ft.Image(
             src="assets/logo.png",
